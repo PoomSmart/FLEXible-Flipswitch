@@ -1,4 +1,4 @@
-Package: org.thebigboss.flexibleflipswitch
+Package: com.ps.flexibleflipswitch
 Name: FLEXible Flipswitch
 Depends: mobilesubstrate, com.a3tweaks.flipswitch, com.shmoopillc.flexible
 Version: 0.0.1

@@ -5,10 +5,13 @@ static BOOL tweakEnabled;
 
 static void toggle()
 {
-	if (!tweakEnabled)
-		[[objc_getClass("FLEXManager") sharedManager] hideExplorer];
-	else
-		[[objc_getClass("FLEXManager") sharedManager] showExplorer];
+	BOOL enabled = [[[NSUserDefaults standardUserDefaults] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier] inDomain:nsDomainString] boolValue];
+	if (enabled) {
+		if (!tweakEnabled)
+			[[objc_getClass("FLEXManager") sharedManager] hideExplorer];
+		else
+			[[objc_getClass("FLEXManager") sharedManager] showExplorer];
+	}
 }
 
 %hook FLEXDylib
@@ -29,9 +32,12 @@ static void PreferencesChanged()
 
 %ctor
 {
-	if (dlopen("/Library/Application Support/FLEXible/com.shmoopillc.flexible.bundle/FLEX.dylib", RTLD_LAZY)) {
-		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChanged, kFLEXibleNotification, NULL, CFNotificationSuspensionBehaviorCoalesce);
-		tweakEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:tweakEnabledKey inDomain:tweakDomainString] boolValue];
-		%init;
+	BOOL enabled = [[[NSUserDefaults standardUserDefaults] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier] inDomain:nsDomainString] boolValue];
+	if (enabled) {
+		if (dlopen("/Library/Application Support/FLEXible/com.shmoopillc.flexible.bundle/FLEX.dylib", RTLD_LAZY)) {
+			CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChanged, kFLEXibleNotification, NULL, CFNotificationSuspensionBehaviorCoalesce);
+			tweakEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:tweakEnabledKey inDomain:tweakDomainString] boolValue];
+			%init;
+		}
 	}
 }
