@@ -5,13 +5,11 @@ static BOOL tweakEnabled;
 
 static void toggle()
 {
-	/*BOOL enabled = [[[NSUserDefaults standardUserDefaults] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier] inDomain:nsDomainString] boolValue];
-	if (enabled) {*/
-		if (!tweakEnabled)
-			[[objc_getClass("FLEXManager") sharedManager] hideExplorer];
-		else
-			[[objc_getClass("FLEXManager") sharedManager] showExplorer];
-	//}
+	BOOL enabled = [[[NSUserDefaults standardUserDefaults] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier] inDomain:nsDomainString] boolValue];
+	if (enabled && tweakEnabled)
+		[[objc_getClass("FLEXManager") sharedManager] showExplorer];
+	else
+		[[objc_getClass("FLEXManager") sharedManager] hideExplorer];
 }
 
 %hook FLEXDylib

@@ -22,5 +22,5 @@ static NSString *tweakDomainString = @"com.flipswitch.shmoopillc.FLEXibleFS";
 static NSString *enabledPrefixKey = @"FLEXibleEnabled-";
 static NSString *tweakEnabledKey = @"FLEXibleEnabled";
 static NSString *PLIST_PATH = @"/var/mobile/Library/Preferences/com.flipswitch.shmoopillc.FLEXibleFS.plist";
-static CFStringRef const kFLEXibleNotification = CFSTR("com.flipswitch.shmoopillc.FLEXibleF/prefs");
+static CFStringRef kFLEXibleNotification = CFSTR("com.flipswitch.shmoopillc.FLEXibleF/prefs");
 //static NSString *switchIdentifier = @"com.shmoopillc.FLEXibleFS";
