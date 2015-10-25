@@ -1,5 +1,5 @@
-#import "FSSwitchDataSource.h"
-#import "FSSwitchPanel.h"
+#import <Flipswitch/FSSwitchDataSource.h>
+#import <Flipswitch/FSSwitchPanel.h>
 #import "Common.h"
 #import <objc/runtime.h>
 

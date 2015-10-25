@@ -1,10 +1,11 @@
-#import "../../Common.h"
+#import "../Common.h"
 #import <objc/runtime.h>
 
 static BOOL tweakEnabled;
 
 static void toggle()
 {
+	//tweakEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:tweakEnabledKey inDomain:tweakDomainString] boolValue];
 	BOOL enabled = [[[NSUserDefaults standardUserDefaults] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier] inDomain:nsDomainString] boolValue];
 	if (enabled && tweakEnabled)
 		[[objc_getClass("FLEXManager") sharedManager] showExplorer];
@@ -12,7 +13,7 @@ static void toggle()
 		[[objc_getClass("FLEXManager") sharedManager] hideExplorer];
 }
 
-%hook FLEXDylib
+%hook DKFLEXLoader
 
 - (void)appLaunched:(id)arg1
 {
