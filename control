@@ -1,7 +1,7 @@
 Package: com.ps.flexibleflipswitch
 Name: FLEXible Flipswitch
 Depends: mobilesubstrate, com.a3tweaks.flipswitch, com.shmoopillc.flexible
-Version: 0.0.1
+Version: 0.0.2
 Architecture: iphoneos-arm
 Description: Flipswitch for FLEXible.
 Maintainer: PoomSmart

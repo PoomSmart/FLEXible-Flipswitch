@@ -5,8 +5,7 @@ static BOOL tweakEnabled;
 
 static void toggle()
 {
-	//tweakEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:tweakEnabledKey inDomain:tweakDomainString] boolValue];
-	BOOL enabled = [[[NSUserDefaults standardUserDefaults] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier] inDomain:nsDomainString] boolValue];
+	BOOL enabled = [[[NSDictionary dictionaryWithContentsOfFile:PLIST_PATH] objectForKey:[enabledPrefixKey stringByAppendingString:NSBundle.mainBundle.bundleIdentifier]] boolValue];
 	if (enabled && tweakEnabled)
 		[[objc_getClass("FLEXManager") sharedManager] showExplorer];
 	else
@@ -25,7 +24,7 @@ static void toggle()
 
 static void PreferencesChanged()
 {
-	tweakEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:tweakEnabledKey inDomain:tweakDomainString] boolValue];
+	tweakEnabled = [[[NSDictionary dictionaryWithContentsOfFile:M_PLIST_PATH] objectForKey:tweakEnabledKey] boolValue];
 	toggle();
 }
 
@@ -42,7 +41,7 @@ static void PreferencesChanged()
 			if (isSpringBoard || isApp) {
 				if (dlopen("/Library/Application Support/FLEXible/com.shmoopillc.flexible.bundle/FLEX.dylib", RTLD_LAZY)) {
 					CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChanged, kFLEXibleNotification, NULL, CFNotificationSuspensionBehaviorCoalesce);
-					tweakEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:tweakEnabledKey inDomain:tweakDomainString] boolValue];
+					tweakEnabled = [[[NSDictionary dictionaryWithContentsOfFile:M_PLIST_PATH] objectForKey:tweakEnabledKey] boolValue];
 					%init;
 				}
 			}
