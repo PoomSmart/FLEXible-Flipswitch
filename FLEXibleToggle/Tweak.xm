@@ -38,7 +38,8 @@ static void PreferencesChanged()
 			NSString *processName = [executablePath lastPathComponent];
 			BOOL isSpringBoard = [processName isEqualToString:@"SpringBoard"];
 			BOOL isApp = [executablePath rangeOfString:@"/Application"].location != NSNotFound;
-			if (isSpringBoard || isApp) {
+			BOOL isExtension = [executablePath rangeOfString:@"appex"].location != NSNotFound;
+			if ((isSpringBoard || isApp) && !isExtension) {
 				if (dlopen("/Library/Application Support/FLEXible/com.shmoopillc.flexible.bundle/FLEX.dylib", RTLD_LAZY)) {
 					CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChanged, kFLEXibleNotification, NULL, CFNotificationSuspensionBehaviorCoalesce);
 					tweakEnabled = [[[NSDictionary dictionaryWithContentsOfFile:M_PLIST_PATH] objectForKey:tweakEnabledKey] boolValue];
